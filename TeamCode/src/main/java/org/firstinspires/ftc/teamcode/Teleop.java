@@ -23,16 +23,21 @@ public class Teleop extends LinearOpMode
         motorleftback = hardwareMap.dcMotor.get("motorleftback");
         motorrightback = hardwareMap.dcMotor.get("motorrightback");
 
-        motorleftfront.setDirection(DcMotor.Direction.REVERSE);
-
         waitForStart();
 
         while(opModeIsActive())
         {
-            motorleftfront.setPower(-gamepad1.left_stick_y);
+            motorleftfront.setPower(gamepad1.left_stick_y);
+            motorleftback.setPower(gamepad1.left_stick_y);
             motorrightfront.setPower(-gamepad1.right_stick_y);
             motorrightback.setPower(-gamepad1.right_stick_y);
-            motorleftback.setPower(-gamepad1.left_stick_y);
+
+            motorleftfront.setPower( -gamepad1.left_stick_x);
+            motorleftback.setPower( gamepad1.left_stick_x);
+            motorrightfront.setPower( -gamepad1.right_stick_x);
+            motorrightback.setPower( gamepad1.right_stick_x);
+
+
 
         }
     }
