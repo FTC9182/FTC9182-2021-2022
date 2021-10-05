@@ -29,8 +29,8 @@ public class Teleop extends LinearOpMode
         while(opModeIsActive())
         {
 motorleftfront.setPower(-gamepad1.left_stick_y);
-            motorrightfront.setPower(-gamepad1.right_stick_y);
-            motorrightback.setPower(-gamepad1.right_stick_y);
+            motorrightfront.setPower(-gamepad1.left_stick_y);
+            motorrightback.setPower(-gamepad1.left_stick_y);
             motorleftback.setPower(-gamepad1.left_stick_y);
             idle(
     }
