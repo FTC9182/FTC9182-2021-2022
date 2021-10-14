@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 //@Autonomous(name = "AutoBeltGear", group = "Test")
 @TeleOp(name = "TestBeltGear", group = "Test")
+@Disabled
 public class AutoBeltGear extends LinearOpMode
 {
     public DcMotor beltGearMotor = null;
