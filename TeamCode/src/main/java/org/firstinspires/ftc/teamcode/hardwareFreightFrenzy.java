@@ -29,7 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -37,10 +39,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class hardwareFreightFrenzy
 {
     /* Public OpMode members. */
-    public DcMotor motorleftfront = null;
-    public DcMotor motorrightfront = null;
-    public DcMotor motorleftback = null;
-    public DcMotor motorrightback = null;
+    public DcMotor motorLeftFront = null;
+    public DcMotor motorRightFront = null;
+    public DcMotor motorLeftBack = null;
+    public DcMotor motorRightBack = null;
+    public DcMotor motorcarousel = null;
+    public DcMotor motorconveyorbelt = null;
+    public DcMotor motorstring = null;
+    public RevRoboticsCoreHexMotor motornoodles = null;
 
     public Servo    leftClaw    = null;
     public Servo    rightClaw   = null;
@@ -57,36 +63,59 @@ public class hardwareFreightFrenzy
 
     }
 
+    /*public void driveMec(double xValue, double yValue, double rxValue)
+    {
+        double denom = Math.max(Math.abs(yValue) + Math.abs(xValue) + Math.abs(rxValue),1);
+        double frontLeftPower = (yValue + xValue + rxValue) / denom;
+        double backLeftPower = (yValue - xValue + rxValue) / denom;
+        double backRightPower = (yValue + xValue + rxValue) / denom;
+        double frontRightPower = (yValue + xValue + rxValue) / denom;
+
+        motorLeftFront.setPower(frontLeftPower);
+        motorLeftBack.setPower(backLeftPower);
+        motorRightBack.setPower(backRightPower);
+        motorRightFront.setPower(frontRightPower);
+    }
+    */
+
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        motorleftfront  = hwMap.get(DcMotor.class, "motorleftfront");
-        motorrightfront = hwMap.get(DcMotor.class, "motorrightfront");
-        motorleftback   = hwMap.get(DcMotor.class, "motorleftback");
-        motorrightback  = hwMap.get(DcMotor.class, "motorrightback");
+        motorLeftFront  = hwMap.get(DcMotor.class, "motorLeftFront");
+        motorLeftBack   = hwMap.get(DcMotor.class, "motorLeftBack");
+        motorRightFront = hwMap.get(DcMotor.class, "motorRightFront");
+        motorRightBack  = hwMap.get(DcMotor.class, "motorRightBack");
+        /* Define and initialize other motors.
+        motorcarousel  = hwMap.get(DcMotor.class, "motorcarousel");
+        motorconveyorbelt  = hwMap.get(DcMotor.class, "motorconveyorbelt");
+        motorstring  = hwMap.get(DcMotor.class, "motorstring");
+        */
+        //motornoodles  = hwMap.get(DcMotor.class, "");
 
-        motorleftfront.setDirection(DcMotor.Direction.FORWARD);
-        motorrightfront.setDirection(DcMotor.Direction.FORWARD);
-        motorleftback.setDirection(DcMotor.Direction.FORWARD);
-        motorrightback.setDirection(DcMotor.Direction.FORWARD);
+        // set defaults
+        motorLeftFront.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftBack.setDirection(DcMotor.Direction.REVERSE);
+        // motorRightFront.setDirection(DcMotor.Direction.FORWARD);
+        motorRightFront.setDirection(DcMotor.Direction.FORWARD); //messed up????
+        motorRightBack.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
-        motorleftfront.setPower(0);
-        motorrightfront.setPower(0);
-        motorleftback.setPower(0);
-        motorrightback.setPower(0);
+        motorLeftFront.setPower(0);
+        motorRightFront.setPower(0);
+        motorLeftBack.setPower(0);
+        motorRightBack.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        motorleftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorrightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorleftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorrightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Define and initialize ALL installed servos.
+
     }
  }
 

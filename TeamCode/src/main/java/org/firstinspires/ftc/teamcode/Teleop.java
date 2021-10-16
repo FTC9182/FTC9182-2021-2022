@@ -1,74 +1,53 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Teleop", group = "teleop")
+public class Teleop extends OpMode {
+    private MecanumDrive _drive;
+    private DcMotor _mc;
+    private DcMotor _ms;
 
-
-@TeleOp(name = "Freight Teleop", group = "9182")
-public class Teleop extends LinearOpMode
-{
-
-    /* Declare OpMode members. */
-    hardwareFreightFrenzy robot   = new hardwareFreightFrenzy();            // Use our hardware profile
-    private ElapsedTime runtime = new ElapsedTime();
-
-    private DcMotor motorleftfront;
-    private DcMotor motorrightfront;
-    private DcMotor motorleftback;
-    private DcMotor motorrightback;
-
+    public void init() {
+        _drive = new MecanumDrive(hardwareMap);
+        _mc  = hardwareMap.get(DcMotor.class, "motorcarousel");
+//        motorconveyorbelt  = hwMap.get(DcMotor.class, "motorconveyorbelt");
+        _ms  = hardwareMap.get(DcMotor.class, "motorstring");    }
 
     @Override
-    public void runOpMode() throws InterruptedException
-    {
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
+    public void start() {
+    }
 
-        //motorleftfront = hardwareMap.dcMotor.get("motorleftfront");
-        //motorrightfront = hardwareMap.dcMotor.get("motorrightfront");
-        //motorleftback = hardwareMap.dcMotor.get("motorleftback");
-        //motorrightback = hardwareMap.dcMotor.get("motorrightback");
+    public void loop() {
 
-        // We show the log in oldest-to-newest order, as that's better for poetry
-        telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.NEWEST_FIRST);
-        // We can control the number of lines shown in the log
-        telemetry.log().setCapacity(6);
+        _drive.setVelocity(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_button);
 
-        waitForStart();
+        _drive.update();
 
-        while(opModeIsActive()) {
-            motorleftfront.setPower(gamepad1.left_stick_y);
-            motorrightfront.setPower(-gamepad1.left_stick_y);
-            motorrightback.setPower(-gamepad1.left_stick_y);
-            motorleftback.setPower(gamepad1.left_stick_y);
-            motorleftfront.setPower(-gamepad1.left_stick_x);
-            motorrightfront.setPower(-gamepad1.left_stick_x);
-            motorrightback.setPower(-gamepad1.left_stick_x);
-            motorleftback.setPower(-gamepad1.left_stick_x);
-            idle();
+        _drive.displayTelemetry(telemetry);
 
-            // Show joystick information as some other illustrative data
-            telemetry.addLine("left joystick | ")
-                    .addData("x", gamepad1.left_stick_x)
-                    .addData("y", gamepad1.left_stick_y);
-            telemetry.addLine("right joystick | ")
-                    .addData("x", gamepad1.right_stick_x)
-                    .addData("y", gamepad1.right_stick_y);
-
-            // Update the screen
-            telemetry.update();
+        if (gamepad1.a) {
+            _mc.setPower(.5);
         }
+        else if (gamepad1.b) {
+            _mc.setPower(-.5);
+        }
+        else {
+            _mc.setPower(0);
+        }
+
+        if (gamepad1.dpad_left) {
+            _ms.setPower(.5);
+        } else if (gamepad1.dpad_right) {
+            _ms.setPower(-.5);
+        } else {
+            _ms.setPower(0);
+        }
+        telemetry.update();
+    }
+
+    @Override
+    public  void stop() {
     }
 }

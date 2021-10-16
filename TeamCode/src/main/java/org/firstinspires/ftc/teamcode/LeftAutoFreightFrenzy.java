@@ -44,10 +44,10 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //@Disabled
 public class LeftAutoFreightFrenzy extends LinearOpMode {
 
-    private DcMotor motorleftfront;
-    private DcMotor motorrightfront;
-    private DcMotor motorleftback;
-    private DcMotor motorrightback;
+    private DcMotor motorLeftFront;
+    private DcMotor motorRightFront;
+    private DcMotor motorLeftBack;
+    private DcMotor motorRightBack;
 
     /* Declare OpMode members. */
     hardwareFreightFrenzy   robot   = new hardwareFreightFrenzy();            // Use our hardware profile
@@ -96,22 +96,22 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
         
-        robot.motorleftfront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorrightfront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorleftback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorrightback.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorLeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.motorleftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorrightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorleftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorrightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Ready...",  "Starting at %7d :%7d :%7d :%7d",
-                          robot.motorleftfront.getCurrentPosition(),
-                          robot.motorrightfront.getCurrentPosition(),
-                          robot.motorleftback.getCurrentPosition(),
-                          robot.motorrightback.getCurrentPosition()
+                          robot.motorLeftFront.getCurrentPosition(),
+                          robot.motorRightFront.getCurrentPosition(),
+                          robot.motorLeftBack.getCurrentPosition(),
+                          robot.motorRightBack.getCurrentPosition()
                         );
         telemetry.update();
 
@@ -204,35 +204,35 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             moveCounts = (int)(distance * COUNTS_PER_INCH);
-            newLeftFrontTarget = robot.motorleftfront.getCurrentPosition() + moveCounts;
-            newRightFrontTarget = robot.motorrightfront.getCurrentPosition() + moveCounts;
-            newLeftBackTarget = robot.motorleftback.getCurrentPosition() + moveCounts;
-            newRightBackTarget = robot.motorrightback.getCurrentPosition() + moveCounts;
+            newLeftFrontTarget = robot.motorLeftFront.getCurrentPosition() + moveCounts;
+            newRightFrontTarget = robot.motorRightFront.getCurrentPosition() + moveCounts;
+            newLeftBackTarget = robot.motorLeftBack.getCurrentPosition() + moveCounts;
+            newRightBackTarget = robot.motorRightBack.getCurrentPosition() + moveCounts;
 
             // Set Target and Turn On RUN_TO_POSITION
-            robot.motorleftfront.setTargetPosition(newLeftFrontTarget);
-            robot.motorrightfront.setTargetPosition(newRightFrontTarget);
-            robot.motorleftback.setTargetPosition(newLeftBackTarget);
-            robot.motorrightback.setTargetPosition(newRightBackTarget);
+            robot.motorLeftFront.setTargetPosition(newLeftFrontTarget);
+            robot.motorRightFront.setTargetPosition(newRightFrontTarget);
+            robot.motorLeftBack.setTargetPosition(newLeftBackTarget);
+            robot.motorRightBack.setTargetPosition(newRightBackTarget);
 
-            robot.motorleftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorrightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorleftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorrightback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorLeftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorRightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorLeftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorRightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // start motion.
             speed = Range.clip(Math.abs(speed), 0.0, 1.0);
-            robot.motorleftfront.setPower(speed);
-            robot.motorrightfront.setPower(speed);
-            robot.motorleftback.setPower(speed);
-            robot.motorrightback.setPower(speed);
+            robot.motorLeftFront.setPower(speed);
+            robot.motorRightFront.setPower(speed);
+            robot.motorLeftBack.setPower(speed);
+            robot.motorRightBack.setPower(speed);
 
             // keep looping while we are still active, and ALL motors are running.
             while (opModeIsActive() &&
-                    (robot.motorleftfront.isBusy()
-                            && robot.motorrightfront.isBusy()
-                            && robot.motorleftback.isBusy()
-                            && robot.motorrightback.isBusy()
+                    (robot.motorLeftFront.isBusy()
+                            && robot.motorRightFront.isBusy()
+                            && robot.motorLeftBack.isBusy()
+                            && robot.motorRightBack.isBusy()
                     )) {
 
                 // adjust relative speed based on heading error.
@@ -254,34 +254,34 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
                     rightSpeed /= max;
                 }
 
-                robot.motorleftfront.setPower(leftSpeed);
-                robot.motorrightfront.setPower(rightSpeed);
-                robot.motorleftback.setPower(leftSpeed);
-                robot.motorrightback.setPower(rightSpeed);
+                robot.motorLeftFront.setPower(leftSpeed);
+                robot.motorRightFront.setPower(rightSpeed);
+                robot.motorLeftBack.setPower(leftSpeed);
+                robot.motorRightBack.setPower(rightSpeed);
 
                 // Display drive status for the driver.
                 telemetry.addData("Err/St",  "%5.1f/%5.1f",  error, steer);
                 telemetry.addData("Target",  "%7d:%7d",      newLeftFrontTarget,  newRightFrontTarget);
-                telemetry.addData("Actual",  "%7d:%7d:7d:%7d", robot.motorleftfront.getCurrentPosition(),
-                        robot.motorrightfront.getCurrentPosition(),
-                        robot.motorleftback.getCurrentPosition(),
-                        robot.motorrightback.getCurrentPosition()
+                telemetry.addData("Actual",  "%7d:%7d:7d:%7d", robot.motorLeftFront.getCurrentPosition(),
+                        robot.motorRightFront.getCurrentPosition(),
+                        robot.motorLeftBack.getCurrentPosition(),
+                        robot.motorRightBack.getCurrentPosition()
                 );
                 telemetry.addData("Speed",   "%5.2f:%5.2f",  leftSpeed, rightSpeed);
                 telemetry.update();
             }
 
             // Stop all motion;
-            robot.motorleftfront.setPower(0);
-            robot.motorrightfront.setPower(0);
-            robot.motorleftback.setPower(0);
-            robot.motorrightback.setPower(0);
+            robot.motorLeftFront.setPower(0);
+            robot.motorRightFront.setPower(0);
+            robot.motorLeftBack.setPower(0);
+            robot.motorRightBack.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            robot.motorleftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorrightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorleftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorrightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 
@@ -328,10 +328,10 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
         }
 
         // Stop all motion;
-        robot.motorleftfront.setPower(0);
-        robot.motorrightfront.setPower(0);
-        robot.motorleftback.setPower(0);
-        robot.motorrightback.setPower(0);
+        robot.motorLeftFront.setPower(0);
+        robot.motorRightFront.setPower(0);
+        robot.motorLeftBack.setPower(0);
+        robot.motorRightBack.setPower(0);
     }
 
     /**
@@ -367,10 +367,10 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
         }
 
         // Send desired speeds to motors.
-        robot.motorleftfront.setPower(leftSpeed);
-        robot.motorrightfront.setPower(rightSpeed);
-        robot.motorleftback.setPower(leftSpeed);
-        robot.motorrightback.setPower(rightSpeed);
+        robot.motorLeftFront.setPower(leftSpeed);
+        robot.motorRightFront.setPower(rightSpeed);
+        robot.motorLeftBack.setPower(leftSpeed);
+        robot.motorRightBack.setPower(rightSpeed);
 
         // Display it for the driver.
         telemetry.addData("Target", "%5.2f", angle);
@@ -431,27 +431,27 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftFrontTarget = robot.motorleftfront.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightFrontTarget = robot.motorrightfront.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            newLeftBackTarget = robot.motorleftback.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightBackTarget = robot.motorrightback.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.motorleftfront.setTargetPosition(newLeftFrontTarget);
-            robot.motorrightfront.setTargetPosition(newRightFrontTarget);
-            robot.motorleftback.setTargetPosition(newLeftBackTarget);
-            robot.motorrightback.setTargetPosition(newRightBackTarget);
+            newLeftFrontTarget = robot.motorLeftFront.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightFrontTarget = robot.motorRightFront.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newLeftBackTarget = robot.motorLeftBack.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightBackTarget = robot.motorRightBack.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            robot.motorLeftFront.setTargetPosition(newLeftFrontTarget);
+            robot.motorRightFront.setTargetPosition(newRightFrontTarget);
+            robot.motorLeftBack.setTargetPosition(newLeftBackTarget);
+            robot.motorRightBack.setTargetPosition(newRightBackTarget);
 
             // Turn On RUN_TO_POSITION
-            robot.motorleftfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorrightfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorleftback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.motorrightback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorLeftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorRightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorLeftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorRightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.motorleftfront.setPower(Math.abs(speed));
-            robot.motorrightfront.setPower(Math.abs(speed));
-            robot.motorleftback.setPower(Math.abs(speed));
-            robot.motorrightback.setPower(Math.abs(speed));
+            robot.motorLeftFront.setPower(Math.abs(speed));
+            robot.motorRightFront.setPower(Math.abs(speed));
+            robot.motorLeftBack.setPower(Math.abs(speed));
+            robot.motorRightBack.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -461,10 +461,10 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
-                   (robot.motorleftfront.isBusy()
-                           && robot.motorrightfront.isBusy()
-                           && robot.motorleftback.isBusy()
-                           && robot.motorrightback.isBusy()
+                   (robot.motorLeftFront.isBusy()
+                           && robot.motorRightFront.isBusy()
+                           && robot.motorLeftBack.isBusy()
+                           && robot.motorRightBack.isBusy()
                    )) {
 
                 // Display it for the driver.
@@ -474,25 +474,25 @@ public class LeftAutoFreightFrenzy extends LinearOpMode {
                                                                                 newRightBackTarget
                                 );
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                                            robot.motorleftfront.getCurrentPosition(),
-                                            robot.motorrightfront.getCurrentPosition(),
-                                            robot.motorleftback.getCurrentPosition(),
-                                            robot.motorrightback.getCurrentPosition()
+                                            robot.motorLeftFront.getCurrentPosition(),
+                                            robot.motorRightFront.getCurrentPosition(),
+                                            robot.motorLeftBack.getCurrentPosition(),
+                                            robot.motorRightBack.getCurrentPosition()
                 );
                 telemetry.update();
             }
 
             // Stop all motion;
-            robot.motorleftfront.setPower(0);
-            robot.motorrightfront.setPower(0);
-            robot.motorleftback.setPower(0);
-            robot.motorrightback.setPower(0);
+            robot.motorLeftFront.setPower(0);
+            robot.motorRightFront.setPower(0);
+            robot.motorLeftBack.setPower(0);
+            robot.motorRightBack.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            robot.motorleftfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorrightfront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorleftback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.motorrightback.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             
             //  sleep(250);   // optional pause after each move
         }
